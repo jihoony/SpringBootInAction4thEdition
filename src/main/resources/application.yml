@@ -5,6 +5,11 @@ logging:
 amazon:
   associatedId: habuma-20
 
+
+management:
+  context-path: /manage
+  security:
+    enabled: false
   
 ---
   
