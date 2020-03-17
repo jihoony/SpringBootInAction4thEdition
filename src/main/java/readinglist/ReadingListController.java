@@ -10,21 +10,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
+
 public class ReadingListController {
 	
 	private ReadingListRepository readingListRepository;
+	private AmazoneProperties amazoneProperties;
 	
 	@Autowired
-	public ReadingListController(ReadingListRepository readingListRepository) {
+	public ReadingListController(ReadingListRepository readingListRepository, AmazoneProperties amazoneProperties) {
 		this.readingListRepository = readingListRepository;
+		this.amazoneProperties = amazoneProperties;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String readersBooks(Reader reader, Model model) {
 		List<Book> readingList = readingListRepository.findByReader(reader);
 		if (readingList!=null) {
 			model.addAttribute("books", readingList);
 			model.addAttribute("reader", reader);
+			model.addAttribute("amazoneID", amazoneProperties.getAssociatedId());
 		}
 		
 		return "readingList";
